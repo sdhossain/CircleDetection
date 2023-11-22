@@ -70,6 +70,8 @@ def train_model(
         callbacks=[WandbCallback(save_model=False)],
         )
 
+    os.makedirs(cfg['TRAIN']['PREDICTIONS_DIR'], exist_ok=True)
+    os.makedirs(cfg['TRAIN']['CHECKPOINTS_DIR'])
     preds = model.predict(test_ds)
     test_df = pd.read_csv(test_csv)
     predictions_df = pd.DataFrame(
@@ -80,7 +82,7 @@ def train_model(
     pred_df.to_csv(
         os.path.join(
             cfg['TRAIN']['PREDICTIONS_DIR'],
-             f"{cur_time}_{cfg['TRAIN']['ARCHITECTURE']['BACKBONE']}"
+             f"{cur_time}_{cfg['TRAIN']['ARCHITECTURE']['BACKBONE']}.csv"
         )
     )
 
