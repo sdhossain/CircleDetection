@@ -21,18 +21,18 @@ DATA:
 
 TRAIN:
   MODE: 'single'  # 'single' or 'cross-val'
-  EPOCHS: 4
+  EPOCHS: 1
   BATCH_SIZE: 32
-  CONTRAST_RANGE: 0.15
+  CONTRAST_RANGE: 0
   INPUT_SHAPE: [224, 224, 3]
   OPTIMIZER: 'adam'
   LEARNING_RATE: 0.001
   ARCHITECTURE:
     BACKBONE: 'resnet18'
     FC_LAYERS: [32]
-    DROPOUT: 0.2
-    L2_REG: 0.0001
-    L2_BASE: 0.0001
+    DROPOUT: 0
+    L2_REG: 0
+    L2_BASE: 0
     WEIGHTS: 'imagenet'
   PREDICTIONS_DIR: 'artifacts/preds'
   CHECKPOINTS_DIR: 'artifacts/models'

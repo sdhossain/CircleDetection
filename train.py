@@ -77,7 +77,12 @@ def train_model(
     pred_df = pd.concat(
         [test_df.reset_index(drop=True), predictions_df], axis=1)
     cur_time = datetime.now().strftime("%Y%m%d_%H%M%S")
-    pred_df.to_csv(f"{cur_time}_{cfg['TRAIN']['ARCHITECTURES']['BACKBONE']}")
+    pred_df.to_csv(
+        os.path.join(
+            cfg['TRAIN']['PREDICTIONS_DIR'],
+             f"{cur_time}_{cfg['TRAIN']['ARCHITECTURE']['BACKBONE']}"
+        )
+    )
 
     return pred_df
 
@@ -91,6 +96,5 @@ if __name__ == "__main__":
                 cfg['DATA']['ROOT_DIR'], 'splits/val.csv'),
             test_csv=os.path.join(
                 cfg['DATA']['ROOT_DIR'], 'splits/test.csv'),
-
         )
 
