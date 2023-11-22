@@ -1,7 +1,10 @@
+#------------------------------------------------------------#
+# This is a script to get dataloaders for tensorflow         #
+#------------------------------------------------------------#
+
 import sys
 sys.path.append('.')
 
-import os
 import pandas as pd
 import numpy as np
 import tensorflow as tf

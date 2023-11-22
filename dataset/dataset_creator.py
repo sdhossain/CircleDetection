@@ -10,7 +10,7 @@ import yaml
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, KFold
-from src.utils.starter import generate_examples
+from utils.starter import generate_examples
 
 
 class CircleDatasetCreator:

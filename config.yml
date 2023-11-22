@@ -2,10 +2,14 @@
 # This a list of configurations to allow for training and evaluation #
 #--------------------------------------------------------------------#
 
+WANDB:
+  PROJECT: 'CircleDetection'
+  ENTITY: 'sdhossain'
+
 DATA:
-  ROOT_DIR: 'data'
+  ROOT_DIR: 'artifacts/data'
   REPLACE: False
-  SAMPLES: 100
+  SAMPLES: 10000
   TRAIN_PROPORTION: 0.8
   VAL_PROPORTION: 0.1
   TEST_PROPORTION: 0.1
@@ -16,5 +20,21 @@ DATA:
   NOISE_LEVEL: 0.5
 
 TRAIN:
+  MODE: 'single'  # 'single' or 'cross-val'
+  EPOCHS: 4
   BATCH_SIZE: 32
   CONTRAST_RANGE: 0.15
+  INPUT_SHAPE: [224, 224, 3]
+  OPTIMIZER: 'adam'
+  LEARNING_RATE: 0.001
+  ARCHITECTURE:
+    BACKBONE: 'resnet18'
+    FC_LAYERS: [32]
+    DROPOUT: 0.2
+    L2_REG: 0.0001
+    L2_BASE: 0.0001
+    WEIGHTS: 'imagenet'
+  PREDICTIONS_DIR: 'artifacts/preds'
+  CHECKPOINTS_DIR: 'artifacts/models'
+
+

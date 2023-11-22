@@ -1,3 +1,8 @@
+#------------------------------------------------------------#
+# This is a script to create convolutional neural networks   #
+# for our regression task                                    #
+#------------------------------------------------------------#
+
 from typing import Optional, Tuple, Callable, Any, List
 
 import tensorflow as tf
@@ -42,7 +47,7 @@ ARCHITECTURE_DICT = {
 }
 
 
-def regression_model_func(
+def regression_model(
         input_shape: List[int] = [224, 224, 3], 
         metrics: Optional[List[tf.keras.metrics.Metric]] = None,
         output_bias: Optional[Any] = None, 
@@ -126,7 +131,7 @@ def regression_model_func(
     model = tf.keras.Model(inputs=X_input, outputs=Y)
     model.summary()
     model.compile(
-        loss=tf.keras.losses.BinaryCrossentropy(),
+        loss=tf.keras.losses.MeanSquaredError(),
         optimizer=optimizer,
         metrics=metrics
     )
