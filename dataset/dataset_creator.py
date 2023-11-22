@@ -1,5 +1,7 @@
 #------------------------------------------------------------#
 # This is a script to create a dataset of an arbitrary size  #
+#                                                            #
+# Author: Saad Hossain (s42hossa@uwaterloo.ca)               #
 #------------------------------------------------------------#
 
 import sys

@@ -1,5 +1,7 @@
 #------------------------------------------------------------#
 # This is a script to get dataloaders for tensorflow         #
+#                                                            #
+# Author: Saad Hossain (s42hossa@uwaterloo.ca)               #
 #------------------------------------------------------------#
 
 import sys

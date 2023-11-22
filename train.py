@@ -1,3 +1,9 @@
+#-------------------------------------------------------------------#
+# This is a script to train models and/or perform cross-validation  #
+#                                                                   #
+# Author: Saad Hossain (s42hossa@uwaterloo.ca)                      #
+#-------------------------------------------------------------------#
+
 import os
 import wandb
 import yaml
@@ -7,6 +13,7 @@ from wandb.keras import WandbCallback
 
 from networks.architectures import regression_model
 from dataset.dataloader import CircleDataLoader
+from utils.misc import save_model_and_preds
 
 
 cfg = yaml.full_load(open(os.path.join(os.getcwd(), 'config.yml'), 'r'))
@@ -27,7 +34,7 @@ def train_model(
         test_csv: path to csv with test data
     
     Returns:
-        test_df: dataframe of test csv with predictions
+        pred_df: dataframe of test csv with predictions
     """
 
     wandb.init(job_type=cfg['TRAIN']['MODE'],
@@ -70,23 +77,45 @@ def train_model(
         callbacks=[WandbCallback(save_model=False)],
         )
 
-    os.makedirs(cfg['TRAIN']['PREDICTIONS_DIR'], exist_ok=True)
-    os.makedirs(cfg['TRAIN']['CHECKPOINTS_DIR'], exist_ok=True)
-    preds = model.predict(test_ds)
-    test_df = pd.read_csv(test_csv)
-    predictions_df = pd.DataFrame(
-        preds, columns=['predicted_row', 'predicted_col', 'predicted_radius'])
-    pred_df = pd.concat(
-        [test_df.reset_index(drop=True), predictions_df], axis=1)
-    cur_time = datetime.now().strftime("%Y%m%d_%H%M%S")
-    pred_df.to_csv(
-        os.path.join(
-            cfg['TRAIN']['PREDICTIONS_DIR'],
-             f"{cur_time}_{cfg['TRAIN']['ARCHITECTURE']['BACKBONE']}.csv"
-        )
+    pred_df = save_model_and_preds(
+        model=model,
+        preds_dir=cfg['TRAIN']['PREDICTIONS_DIR'],
+        checkpoints_dir=cfg['TRAIN']['PREDICTIONS_DIR'],
+        test_csv=test_csv,
+        test_ds=test_ds,
+        backbone=cfg['TRAIN']['ARCHITECTURE']['BACKBONE']
     )
 
     return pred_df
+
+
+def kfold_cross_val() -> None:
+    """
+    Runs a k-fold cross validation
+    """
+
+    k = cfg['TRAIN']['KFOLD']
+    full_results = pd.DataFrame()
+
+    for fold in range(k):
+        print(f"Training on fold {fold+1}/{k}...")
+
+        train_csv = os.path.join(
+            cfg['DATA']['ROOT_DIR'], f'splits/folds/train/{fold}.csv')
+        val_csv = os.path.join(
+            cfg['DATA']['ROOT_DIR'], f'splits/folds/val/{fold}.csv')
+
+        pred_df = train_model(train_csv, val_csv, val_csv)
+        pred_df['fold'] = fold
+
+        full_results = pd.concat([full_results, pred_df], ignore_index=True)
+
+    save_path = os.path.join(
+        cfg['TRAIN']['PREDICTIONS_DIR'], 'cross_val_results.csv')
+    full_results.to_csv(save_path, index=False)
+    print(f"Cross-validation results saved to {save_path}")
+
+    return
 
 
 if __name__ == "__main__":
@@ -99,4 +128,7 @@ if __name__ == "__main__":
             test_csv=os.path.join(
                 cfg['DATA']['ROOT_DIR'], 'splits/test.csv'),
         )
+
+    if cfg['TRAIN']['MODE'] == 'cross-val':
+        kfold_cross_val()
 

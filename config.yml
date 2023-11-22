@@ -40,5 +40,9 @@ TRAIN:
 EVAL:
   PREDICTIONS_CSV: 'artifacts/preds/20231122_070029_resnet18'  # <insert prediction csv path here>
   VIS_DIR: 'artifacts/visualizations'
+  BACKBONE: 'resnet18'
+  CHECKPOINT: null
+  SALIENCY_FOCUS: 2  # 0 for row, 1 for col, 2 for radius
+  INPUT_DIMS: [224, 224]
 
 

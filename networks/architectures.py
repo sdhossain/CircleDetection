@@ -1,6 +1,8 @@
 #------------------------------------------------------------#
 # This is a script to create convolutional neural networks   #
 # for our regression task                                    #
+#                                                            #
+# Author: Saad Hossain (s42hossa@uwaterloo.ca)               #
 #------------------------------------------------------------#
 
 from typing import Optional, Tuple, Callable, Any, List
