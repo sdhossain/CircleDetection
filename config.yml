@@ -37,4 +37,8 @@ TRAIN:
   PREDICTIONS_DIR: 'artifacts/preds'
   CHECKPOINTS_DIR: 'artifacts/models'
 
+EVAL:
+  PREDICTIONS_CSV: null  # <insert prediction csv path here>
+  VIS_DIR: 'artifacts/visualizations'
+
 
