@@ -4,9 +4,9 @@
 # Author: Saad Hossain (s42hossa@uwaterloo.ca)                       #
 #--------------------------------------------------------------------#
 
+from typing import Tuple
 import numpy as np
 import tensorflow as tf
-from typing import Tuple
 import tensorflow_io as tfio
 from networks.architectures import ARCHITECTURE_DICT
 

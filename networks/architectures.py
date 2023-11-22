@@ -8,16 +8,16 @@
 from typing import Optional, Tuple, Callable, Any, List
 
 import tensorflow as tf
-from tensorflow.keras.optimizers import Adam, SGD
-from tensorflow.keras.layers import Dense, Dropout, Input, \
-                                    Activation, GlobalAveragePooling2D
+from tensorflow.keras import Input
 from tensorflow.keras.regularizers import L2
 from tensorflow.keras.initializers import Constant
 from classification_models.keras import Classifiers
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.applications.resnet50 import ResNet50
-from tensorflow.keras import Input
 from tensorflow.keras.applications import MobileNet, MobileNetV3Small
+from tensorflow.keras.optimizers import Adam, SGD
+from tensorflow.keras.layers import Dense, Dropout, Input, \
+                                    Activation, GlobalAveragePooling2D
 
 
 # Architecture dictionary to extract backbones with imagenet pre-trained
@@ -62,7 +62,7 @@ def regression_model(
         base_architecture: str = 'mobilenetv2', 
         weights: str = 'imagenet',
     ) -> Tuple[tf.keras.Model, Callable[[tf.Tensor], tf.Tensor]]:
-    '''
+    """
     Defines a model based on a pretrained from imagenet classifier
     (backbone used only and adapted for regression task)
 
@@ -83,7 +83,7 @@ def regression_model(
     Returns:
         (model, preprocessing_function): a Keras Model object with the
         architecture defined in this method + preprocessing function
-    '''
+    """
 
     architecture_func = ARCHITECTURE_DICT[base_architecture]['func']
 

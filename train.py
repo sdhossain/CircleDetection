@@ -8,7 +8,6 @@ import os
 import wandb
 import yaml
 import pandas as pd
-from datetime import datetime
 from wandb.keras import WandbCallback
 
 from networks.architectures import regression_model
@@ -80,7 +79,7 @@ def train_model(
     pred_df = save_model_and_preds(
         model=model,
         preds_dir=cfg['TRAIN']['PREDICTIONS_DIR'],
-        checkpoints_dir=cfg['TRAIN']['PREDICTIONS_DIR'],
+        checkpoints_dir=cfg['TRAIN']['CHECKPOINTS_DIR'],
         test_csv=test_csv,
         test_ds=test_ds,
         backbone=cfg['TRAIN']['ARCHITECTURE']['BACKBONE']
@@ -99,15 +98,12 @@ def kfold_cross_val() -> None:
 
     for fold in range(k):
         print(f"Training on fold {fold+1}/{k}...")
-
         train_csv = os.path.join(
             cfg['DATA']['ROOT_DIR'], f'splits/folds/train/{fold}.csv')
         val_csv = os.path.join(
             cfg['DATA']['ROOT_DIR'], f'splits/folds/val/{fold}.csv')
-
         pred_df = train_model(train_csv, val_csv, val_csv)
         pred_df['fold'] = fold
-
         full_results = pd.concat([full_results, pred_df], ignore_index=True)
 
     save_path = os.path.join(

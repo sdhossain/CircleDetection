@@ -1,0 +1,9 @@
+numpy
+pandas
+prettytable
+tensorflow
+scikit-image
+matplotlib
+scikit-learn
+pyyaml
+wandb

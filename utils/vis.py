@@ -4,13 +4,14 @@
 # Author: Saad Hossain (s42hossa@uwaterloo.ca)               #
 #------------------------------------------------------------#
 
+from typing import List, Tuple
+
 import os
 import pandas as pd
-import numpy as np
-from skimage import io
-from typing import List, Tuple
-import matplotlib.pyplot as plt
 import tensorflow as tf
+import matplotlib.pyplot as plt
+
+from skimage import io
 from skimage.transform import resize
 from utils.explainability import compute_saliency_map
 

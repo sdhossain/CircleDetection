@@ -28,7 +28,7 @@ TRAIN:
   OPTIMIZER: 'adam'
   LEARNING_RATE: 0.001
   ARCHITECTURE:
-    BACKBONE: 'resnet18'
+    BACKBONE: 'mobilenetv3'
     FC_LAYERS: [32]
     DROPOUT: 0
     L2_REG: 0
@@ -38,10 +38,10 @@ TRAIN:
   CHECKPOINTS_DIR: 'artifacts/models'
 
 EVAL:
-  PREDICTIONS_CSV: 'artifacts/preds/20231122_135825_resnet50.csv'
-  VIS_DIR: 'artifacts/visualizations'
-  BACKBONE: 'resnet50'
-  CHECKPOINT: 'artifacts/models/20231122_135825_resnet50'
+  PREDICTIONS_CSV: 'path/to/predictions'
+  VIS_DIR: 'path/to/visualizations'
+  BACKBONE: 'mobilenetv3'
+  CHECKPOINT: 'path/to/checkpoints'
   SALIENCY_FOCUS: 2  # 0 for row, 1 for col, 2 for radius
   INPUT_DIMS: [224, 224]
 

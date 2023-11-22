@@ -15,11 +15,11 @@ from tensorflow.keras.layers import RandomContrast
 
 
 class CircleDataLoader:
-    '''
+    """
     Creates a Circle-TF dataset from image filenames and corresponding labels.
     Includes data preprocessing functionality, including resizing and
     data augmentation.
-    '''
+    """
 
     def __init__(
             self, 
@@ -28,7 +28,7 @@ class CircleDataLoader:
             contrast_range: float = 0.15,
             scale_fn: Optional[Callable[[tf.Tensor], tf.Tensor]] = None
         ) -> None:
-        '''
+        """
         Constructor of CircleDataLoader Object/Class
 
         Args:
@@ -37,7 +37,7 @@ class CircleDataLoader:
             contrast_range: (deviation) bounds for random contrast
                 data augmentation.
             scale_fn: Model-specific preprocessing function
-        '''
+        """
 
         self.dims = dimensions
         self.batch_size = batch_size
@@ -56,7 +56,7 @@ class CircleDataLoader:
             shuffle: bool = False,
             augment: bool = False
         ) -> tf.data.Dataset:
-        '''
+        """
         Maps a series of preprocessing functions to each item in a dataset
         
         Args:
@@ -66,7 +66,7 @@ class CircleDataLoader:
 
         Returns:
             dataloader: returns a tensorflow dataset
-        '''
+        """
 
         # Read in File Names and Labels
         df = pd.read_csv(csv_path)
@@ -108,7 +108,7 @@ class CircleDataLoader:
             image_filename: str,
             label: tf.Tensor,
     ) -> Tuple[tf.Tensor, tf.Tensor]:
-        '''
+        """
         Parse image and csv file info, resizes and extract labesl.
         Produces a tuple consisting of a resized image and label
 
@@ -118,7 +118,7 @@ class CircleDataLoader:
 
         Returns:
             (image, label): tuple consisting of the resized image and label
-        '''
+        """
 
         image_str = tf.io.read_file(image_filename)
         image_decoded = tf.image.decode_png(image_str, channels=1)
