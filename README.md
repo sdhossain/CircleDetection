@@ -61,20 +61,29 @@ It is important to note that the model does not exactly do extremely poorly in a
 
 ```plaintext
 .
-├── dataset
-│   ├── dataloader.py             # DataLoader class for data processing
-│   └── dataset_creator.py        # Script for dataset creation
-├── networks
-│   └── architectures.py          # Definitions of CNN architectures
-├── utils
-│   ├── explainability.py         # Functions for model explainability
-│   ├── misc.py                   # Miscellaneous utilities
-│   ├── starter.py                # Initial setup and testing script
-│   └── vis.py                    # Visualization utilities
-├── config.yml                    # Configuration parameters for the project
-├── evaluate.py                   # Script for evaluating model performance
-├── LICENSE                       # License information
-└── train.py                      # Main script for training the CNN model
+├── checkpoints
+│   └── 202311...                  # The model weights!
+├── figures
+├── src
+│   ├── dataset
+│   │   ├── dataloader.py          # DataLoader class for data processing
+│   │   └── dataset_creator.py     # Script for dataset creation
+│   ├── networks
+│   │   └── architectures.py       # Definitions of CNN architectures
+│   └── utils
+│       ├── explainability.py      # Functions for model explainability
+│       ├── misc.py                # Miscellaneous utilities
+│       ├── starter.py             # Initial setup and testing script
+│       └── vis.py                 # Visualization utilities
+│   ├── evaluate.py                # Script for evaluating model performance
+│   └── train.py                   # Main script for training the CNN model
+├── wandb
+├── .gitignore
+├── config.yml                     # Configuration parameters for the project
+├── LICENSE                        # License information
+└── README.md                      # Project README file
+└── requirements.txt               # Project dependencies
+
 ```
 
 
