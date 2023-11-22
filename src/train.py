@@ -88,34 +88,9 @@ def train_model(
     return pred_df
 
 
-def kfold_cross_val() -> None:
-    """
-    Runs a k-fold cross validation
-    """
-
-    k = cfg['TRAIN']['KFOLD']
-    full_results = pd.DataFrame()
-
-    for fold in range(k):
-        print(f"Training on fold {fold+1}/{k}...")
-        train_csv = os.path.join(
-            cfg['DATA']['ROOT_DIR'], f'splits/folds/train/{fold}.csv')
-        val_csv = os.path.join(
-            cfg['DATA']['ROOT_DIR'], f'splits/folds/val/{fold}.csv')
-        pred_df = train_model(train_csv, val_csv, val_csv)
-        pred_df['fold'] = fold
-        full_results = pd.concat([full_results, pred_df], ignore_index=True)
-
-    save_path = os.path.join(
-        cfg['TRAIN']['PREDICTIONS_DIR'], 'cross_val_results.csv')
-    full_results.to_csv(save_path, index=False)
-    print(f"Cross-validation results saved to {save_path}")
-
-    return
-
-
 if __name__ == "__main__":
     if cfg['TRAIN']['MODE'] == 'single':
+        # Running a single training experiment
         train_model(
             train_csv=os.path.join(
                 cfg['DATA']['ROOT_DIR'], 'splits/train.csv'),
@@ -126,5 +101,22 @@ if __name__ == "__main__":
         )
 
     if cfg['TRAIN']['MODE'] == 'cross-val':
-        kfold_cross_val()
+        # Running k-fold cross validation
+        k = cfg['TRAIN']['KFOLD']
+        full_results = pd.DataFrame()
+    
+        for fold in range(k):
+            print(f"Training on fold {fold+1}/{k}...")
+            train_csv = os.path.join(
+                cfg['DATA']['ROOT_DIR'], f'splits/folds/train/{fold}.csv')
+            val_csv = os.path.join(
+                cfg['DATA']['ROOT_DIR'], f'splits/folds/val/{fold}.csv')
+            pred_df = train_model(train_csv, val_csv, val_csv)
+            pred_df['fold'] = fold
+            full_results = pd.concat([full_results, pred_df], ignore_index=True)
+    
+        save_path = os.path.join(
+            cfg['TRAIN']['PREDICTIONS_DIR'], 'cross_val_results.csv')
+        full_results.to_csv(save_path, index=False)
+        print(f"Cross-validation results saved to {save_path}")
 
