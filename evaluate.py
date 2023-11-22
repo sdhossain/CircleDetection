@@ -88,7 +88,7 @@ if __name__ == "__main__":
     df = pd.read_csv(cfg['EVAL']['PREDICTIONS_CSV'])
 
     # Evaluate and final model fail/success cases
-    #evaluate_accuracy(df)
+    evaluate_accuracy(df)
 
     # Visualize model performance and explainability
     plot_and_save_circles(df=df,
