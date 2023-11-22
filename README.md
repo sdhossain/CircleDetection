@@ -32,7 +32,7 @@ Our MobileNetV3 model (1 million parameters) which was trained with an Adam opti
 +------------------+-----------+------------+-----------+------------+
 ```
 
-The above table is printed out on execution of `evaluate.py`. We notice that the higher the IoU threshold, the worse the accuracy - as one would naturally expect as we are being increasingly conservative and require much more overlap or intersection. We see the model has great difficulty in detecting smaller circles and is very successful in detecting larger circles.
+The above table is printed out on execution of `src/evaluate.py`. We notice that the higher the IoU threshold, the worse the accuracy - as one would naturally expect as we are being increasingly conservative and require much more overlap or intersection. We see the model has great difficulty in detecting smaller circles and is very successful in detecting larger circles.
 
 Overall, our results are not bad for a preliminary run. Moreover, we opt to use no regularization or augmentations, as the do not suffer a great deal of overfitting (eventhough we do observe some). This would be an important consideration for future experiments. Please see the following loss (we see that our model converges to a loss, and the training and validation loss both plateau with a gap that increases with time):
 
@@ -95,7 +95,7 @@ pip install -r requirements.txt
 Run the `dataset_creator.py` script to generate your dataset:
 
 ```bash
-python dataset_creator.py
+python src/data/dataset_creator.py
 ```
 
 ### Configuration
@@ -107,7 +107,7 @@ Adjust the settings in `config.yml` to switch between training modes (`single` o
 Execute the `train.py` script to start the training process:
 
 ```bash
-python train.py
+python src/train.py
 ```
 
 ### Evaluation
@@ -115,7 +115,7 @@ python train.py
 Use `evaluate.py` to assess the model's performance:
 
 ```bash
-python evaluate.py
+python src/evaluate.py
 ```
 
 For a full walkthrough, including visualizations and interpretation of results, refer to the Jupyter notebooks provided in the repository.
