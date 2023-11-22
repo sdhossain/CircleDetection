@@ -7,12 +7,13 @@
 import numpy as np
 import tensorflow as tf
 from typing import Tuple
+import tensorflow_io as tfio
 from networks.architectures import ARCHITECTURE_DICT
 
 
 def compute_saliency_map(
         model: tf.keras.Model,
-        img: np.array,
+        img_path: str,
         backbone: str,
         class_idx: int,
         dimensions: Tuple[int, int],
@@ -22,7 +23,7 @@ def compute_saliency_map(
 
     Args:
         model: The loaded TensorFlow model for computations
-        img: The input image for which the saliency map is to be generated.
+        img_path: Path to input image upon which we compute saliency map
         backbone: name of the architecture we are running explainability for
         class_idx: The index of the output neuron to focus on. In a regression
             model, this corresponds to a particular output feature.
@@ -33,15 +34,19 @@ def compute_saliency_map(
         saliency_map: The computed saliency map as a numpy array.
     """
 
-    _, preprocess_fn = ARCHITECTURE_DICT[backbone]
-
-    img_resized = tf.image.resize(img, dimensions)
-    img_resized = tf.cast(img_resized, tf.float32)
+    preprocess_fn = ARCHITECTURE_DICT[backbone]['preprocess_fn']
+    
+    image_str = tf.io.read_file(img_path)
+    image_decoded = tf.image.decode_png(image_str, channels=1)
+    image = tf.cast(image_decoded, tf.float32)
+    image = tf.image.resize(image, dimensions)
+    image = tf.image.grayscale_to_rgb(image)
+    image = tf.expand_dims(image, 0)
 
     if preprocess_fn is not None:
-        img_processed = preprocess_fn(img_resized[np.newaxis, ...])
+        img_processed = preprocess_fn(image)
     else:
-        img_processed = img_resized[np.newaxis, ...] / 255.0
+        img_processed = image/ 255.0
 
     with tf.GradientTape() as tape:
         tape.watch(img_processed)
