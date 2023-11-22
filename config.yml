@@ -38,7 +38,7 @@ TRAIN:
   CHECKPOINTS_DIR: 'artifacts/models'
 
 EVAL:
-  PREDICTIONS_CSV: null  # <insert prediction csv path here>
+  PREDICTIONS_CSV: 'artifacts/preds/20231122_070029_resnet18'  # <insert prediction csv path here>
   VIS_DIR: 'artifacts/visualizations'
 
 

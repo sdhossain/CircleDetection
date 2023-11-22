@@ -43,7 +43,7 @@ def evaluate_accuracy(df: pd.DataFrame) -> None:
     """
 
     thresholds = [0.5, 0.75, 0.9, 0.95]
-    radius_ranges = [(0, 10), (10, 25), (25, 50), (50, 100)]
+    radius_ranges = [(5, 10), (10, 25), (25, 50), (50, 100)]
 
     table = PrettyTable()
     table.field_names = ["Radius Range/IoU"] + [
@@ -58,8 +58,11 @@ def evaluate_accuracy(df: pd.DataFrame) -> None:
                     (df['radius'] >= min_radius) & (df['radius'] < max_radius)]
             else:
                 radius_df = df
-            accuracy = calculate_accuracy(radius_df, threshold)
-            row.append(f"{accuracy * 100:.2f}%")
+            if len(radius_df) > 0: 
+                accuracy = calculate_accuracy(radius_df, threshold)
+                row.append(f"{accuracy * 100:.2f}%")
+            else:
+                row.append(f"N/A")
         table.add_row(row)
 
     print(table)

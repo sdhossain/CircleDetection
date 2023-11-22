@@ -71,7 +71,7 @@ def train_model(
         )
 
     os.makedirs(cfg['TRAIN']['PREDICTIONS_DIR'], exist_ok=True)
-    os.makedirs(cfg['TRAIN']['CHECKPOINTS_DIR'])
+    os.makedirs(cfg['TRAIN']['CHECKPOINTS_DIR'], exist_ok=True)
     preds = model.predict(test_ds)
     test_df = pd.read_csv(test_csv)
     predictions_df = pd.DataFrame(
