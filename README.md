@@ -40,6 +40,8 @@ Overall, our results are not bad for a preliminary run. Moreover, we opt to use 
 
 Alternatively, you can also see the run on wandb: [wandb run](https://wandb.ai/sdhossain/CircleDetection/runs/ikiphy2b/workspace?workspace=user-sdhossain)
 
+Some commentary on the loss graph would be that we notice that the validation loss plateaus after the ~1st/2nd epoch and its a very gentle descent/non-steep in the following epochs indicating that most of the learning has been done in the first (as expected), however much less is done subsequently, indicating that there are a number of different pathways to be taken. The first would perhaps be the addition of a learning rate scheduler such that additional minima may be found, a simple reduce learning rate on plateau might also be useful. Moreover, we can also attempt to use SGD and observe what we see there. The overfitting problem can perhaps be addressed with more data, and as we are failing on specific classes, we can even introduce sample weighting, or even upsample circles with small radii.
+
 We also visualized the model's predictions in the images below with their saliency maps to give insight into the model's thought processes in an effort to consider future experiments.
 
 The model is usually successful on large circles as we see below:
@@ -50,7 +52,7 @@ The model is usually successful on large circles as we see below:
 
 ![Small Circle](figures/small_circle.png)
 
-![Tiny Circle](figures/small_circle.png)
+![Tiny Circle](figures/tiny_circle.png)
 
 The saliency maps in the images shown above correspond to gradient activations as it pertains to the node that is responsible for regressing the radius of the circle. In all four images, (in order from largest to smallest) we see that there is saliency in the locality of the circle. However, there is clear saliency in at the circumferences of the larger circles than at the smaller. In-fact for the smallest one, we actually notice that it strugles to get coherent points (in comparison to the others where it is clear).
 
